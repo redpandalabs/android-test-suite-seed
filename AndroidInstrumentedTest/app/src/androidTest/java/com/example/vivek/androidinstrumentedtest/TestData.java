@@ -30,7 +30,7 @@ import static junit.framework.Assert.assertTrue;
 public class TestData extends LoginScreen {
 
     @Rule
-    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
 
 
     private String email;

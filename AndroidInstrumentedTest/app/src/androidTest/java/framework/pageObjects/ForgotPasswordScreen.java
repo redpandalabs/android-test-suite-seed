@@ -1,4 +1,5 @@
 package framework.pageObjects;
+
 import android.support.test.espresso.ViewInteraction;
 
 import com.sdxo.R;
@@ -26,6 +27,7 @@ public class ForgotPasswordScreen {
     private ViewInteraction button = onView(withId(R.id.actionButton));
     private ViewInteraction title = onView(withId(R.id.subTitleTextView));
     private ViewInteraction emailSentTitle = onView(withId(R.id.titleTextView));
+    private ViewInteraction resetPasswordDialog = onView(withText(R.string.forgot_password_title));
 
     protected void clickSubmitButton(){
         button.perform(click());
@@ -50,7 +52,8 @@ public class ForgotPasswordScreen {
         Delay.waitForElementUntilDisplayed(title);
     }
 
-    protected void verifyEmailSentTitle(String message){
+    protected void verifySuccessEmailSentMessage(String message){
+        waitForResponse();
         emailSentTitle.check(matches(withText(message)));
     }
 
@@ -58,5 +61,9 @@ public class ForgotPasswordScreen {
         onView(withText(message)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
     }
 
+    public void doesResetPasswordDialogAppear(){
+
+        resetPasswordDialog.check(matches(isDisplayed()));
+    }
 }
 

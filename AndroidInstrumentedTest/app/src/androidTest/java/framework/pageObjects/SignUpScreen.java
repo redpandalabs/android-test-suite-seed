@@ -11,16 +11,21 @@ import com.sdxo.R;
 
 import org.hamcrest.Matchers;
 
+import java.util.Random;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
@@ -37,27 +42,30 @@ public class SignUpScreen {
     private ViewInteraction registerPassword = onView(withId(R.id.registerPasswordEditText));
     private ViewInteraction registerConfirmPassword = onView(withId(R.id.registerConfirmPasswordEditText));
     private ViewInteraction registerButton = onView(withId(R.id.registerButton));
-    private ViewInteraction termsAndConditions = onView(withId(R.id.sodexoTermsAndConditions));
-    private ViewInteraction closeButton = onView(withText("CLOSE"));
-    private ViewInteraction checkTitle = onView(withText("T&C (Terms & Conditions)"));
+    private ViewInteraction termsAndConditions = onView(allOf(withId(R.id.sodexoTermsAndConditions), isClickable()));
+    private ViewInteraction okButton = onView(withText("OK"));
 
     private ViewInteraction registrationFailureMessage = onView(withId(R.id.subTitleTextView));
 
     protected void enterName(String username){
 
+        name.perform(clearText());
         name.perform(typeText(username), closeSoftKeyboard());
 
     }
 
     protected void enterEmail(String email){
+        registerEmail.perform(clearText());
         registerEmail.perform(typeText(email), closeSoftKeyboard());
     }
 
     protected void enterPassword(String pwd){
+        registerPassword.perform(clearText());
         registerPassword.perform(typeText(pwd), closeSoftKeyboard());
     }
 
     protected void enterConfirmPassword(String pwd){
+        registerConfirmPassword.perform(clearText());
         registerConfirmPassword.perform(typeText(pwd), closeSoftKeyboard());
     }
 
@@ -65,14 +73,13 @@ public class SignUpScreen {
         registerButton.perform(click());
     }
 
-    protected void verifyTermsAndConditions(){
+    protected void openTermsAndConditionsPage(){
         termsAndConditions.perform(click());
-        checkTitle.check(matches(isDisplayed()));
-        closeButton.perform(click());
     }
 
-    protected void selectGender(){
+    protected void selectGender(String gender){
 
+        onView(withText(gender)).perform(click());
     }
 
     protected void selectCity(String city){
@@ -86,7 +93,7 @@ public class SignUpScreen {
 
         birthDate.perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, monthOfYear, dayOfMonth));
-        onView(withText("OK")).perform(click());
+        okButton.perform(click());
     }
 
     protected void verifySignUpScreen(){
@@ -96,27 +103,40 @@ public class SignUpScreen {
 
     }
 
-    protected String getCity(String city){
+    public String getCity(){
 
-//        To get the array of strings, use following approach
+        /**
+         *
+         * To get the array of strings from strings.xml file, use following approach
+         *
+         *<string-array name="cities">
+         *     <item>string1</item>
+         *     <item>string2</item>
+         *     :
+         *</string-array>
+         *
+         *
+         */
+
+
+        Random rand = new Random();
+
         Resources resource = InstrumentationRegistry.getContext().getResources();
         String[] citiesList = resource.getStringArray(R.array.cities);
+
         int size = citiesList.length;
 
-        for(int i=0; i<size; i++){
+        int x = rand.nextInt(size);
 
-            if(citiesList[i].equals(city)){
-                return city;
-            }
-        }
+        return citiesList[x];
 
-        return null;
     }
 
     protected boolean getRegistrationFailureMessage(){
 
         try{
             registrationFailureMessage.check(matches(isDisplayed()));
+            okButton.perform(click());
             return true;
 
         }catch (Exception err){

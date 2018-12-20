@@ -9,6 +9,7 @@ import framework.testBase.TestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -27,6 +28,7 @@ public class LoginScreen extends TestBase {
     private ViewInteraction loginButton = onView(withId(R.id.loginButton));
     private ViewInteraction sodexoLogo = onView(withId(R.id.loginAppImageView));
     private ViewInteraction authenticateUser = onView(withText("My Sodexo Mobile Wallet"));
+    private ViewInteraction forgotPasswordLink = onView(withId(R.id.loginForgotPasswordTextView));
 
 
     public void enterEmail(String email){
@@ -62,4 +64,12 @@ public class LoginScreen extends TestBase {
         sodexoLogo.check(matches(isDisplayed()));
     }
 
+
+    public void verifyForgotPasswordLink(){
+        forgotPasswordLink.check(matches(isDisplayed()));
+    }
+
+    public void clickForgotPasswordLink(){
+        forgotPasswordLink.perform(click());
+    }
 }

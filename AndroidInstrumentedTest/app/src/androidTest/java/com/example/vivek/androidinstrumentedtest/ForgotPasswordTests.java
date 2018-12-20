@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import framework.pageObjects.ForgotPasswordScreen;
+import framework.pageObjects.LoginScreen;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -24,20 +25,20 @@ import static junit.framework.Assert.assertTrue;
 @LargeTest
 public class ForgotPasswordTests extends ForgotPasswordScreen {
 
-    String expectedToastMessage = "Invalid Email";
-    String expectedUserNotFoundMessage = "User not found";
-    String expectedEmailSentMessage = "Email Sent";
+    private String expectedToastMessage = "Invalid Email";
+    private String expectedToastErrorMessage = "User not found";
+    private String expectedEmailSentMessage = "Email Sent";
 
-    String wrongEmail = "test123.com";
-    String correctEmail = "testmail@gmail.com";
+    private String wrongEmail = "testemail@.com";
+    private String correctEmail = "testmail@example.com";
 
     @Rule
-    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<LoginActivity>(LoginActivity.class);
 
 
     public void clickForgotPasswordLink(){
-        LoginPageTests lpt = new LoginPageTests();
-        lpt.click_forgot_password();
+        LoginScreen ls = new LoginScreen();
+        ls.clickForgotPasswordLink();
     }
 
     @Before
@@ -49,7 +50,7 @@ public class ForgotPasswordTests extends ForgotPasswordScreen {
 
     }
 
-    //    @Test
+    @Test
     public void reset_password_without_email() {
 
         clickForgotPasswordLink();
@@ -63,19 +64,17 @@ public class ForgotPasswordTests extends ForgotPasswordScreen {
         clickForgotPasswordLink();
         enterEmail(wrongEmail);
         clickSubmitButton();
-        assertTrue(verifyTitle(expectedUserNotFoundMessage));
-        clickSubmitButton();
+        assertTrue(verifyTitle(expectedToastErrorMessage));
 
     }
 
-    //    @Test
+    @Test
     public void reset_password_with_valid_mail(){
 
         clickForgotPasswordLink();
         enterEmail(correctEmail);
         clickSubmitButton();
-        waitForResponse();
-        verifyEmailSentTitle(expectedEmailSentMessage);
+        verifySuccessEmailSentMessage(expectedEmailSentMessage);
         clickSubmitButton();
     }
 

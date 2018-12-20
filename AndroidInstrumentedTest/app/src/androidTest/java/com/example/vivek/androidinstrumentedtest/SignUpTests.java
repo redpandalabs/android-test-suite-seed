@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import framework.dataGenerator.DataGenerator;
 import framework.pageObjects.SignUpScreen;
 
 import static junit.framework.Assert.assertTrue;
@@ -25,10 +26,10 @@ import static junit.framework.Assert.assertTrue;
 @LargeTest
 public class SignUpTests extends SignUpScreen {
 
-    private String registeredEmailAddress = "testmail@gmail.com";
-    String password = "sffefewe";
-    String confirmPassword = "erewfer123##";
+    private String registeredEmailAddress = "testmail@example.com";
     String city = "Bantul";
+
+    private DataGenerator testData = new DataGenerator();
 
     @Rule
     public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<LoginActivity>(LoginActivity.class);
@@ -40,20 +41,28 @@ public class SignUpTests extends SignUpScreen {
 
     }
 
-    public void verifyRegistrationWithFullFlow(){
-
-    }
+//    public void verifyRegistrationWithFullFlow(){
+//
+//        enterName(testData.getName());
+//        selectBirthdate(4,4,4);
+//        selectGender(gender);
+//        selectCity(testData.getCity());
+//        enterEmail(testData.getEmail());
+//        enterPassword(testData.getPassword());
+//        enterConfirmPassword(testData.getPassword());
+//        clickRegisterButton();
+//    }
 
     @Test
     public void registrationWithAlreadyRegisteredEmailAddress(){
 
-        enterName("Testname");
-        selectBirthdate(1993, 10, 22);
-        selectGender();
-        selectCity(city);
+        enterName(testData.getName());
+        selectBirthdate(testData.getYear(), testData.getMonthOfYear(), testData.getDayOfMonth());
+        selectGender(testData.getGender());
+        selectCity(getCity());
         enterEmail(registeredEmailAddress);
-        enterPassword(password);
-        enterConfirmPassword(confirmPassword);
+        enterPassword(testData.getPassword());
+        enterConfirmPassword(testData.getPassword());
         clickRegisterButton();
         assertTrue(getRegistrationFailureMessage());
     }
@@ -61,7 +70,7 @@ public class SignUpTests extends SignUpScreen {
 
 
     @Test
-    public void testTermsAndConditions(){
-        verifyTermsAndConditions();
+    public void verifyTermsAndConditions(){
+        openTermsAndConditionsPage();
     }
 }

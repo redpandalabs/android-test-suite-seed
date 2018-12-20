@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.sdxo.R;
 import com.sdxo.ui.activity.login.LoginActivity;
 
 import org.junit.FixMethodOrder;
@@ -14,14 +13,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+import framework.pageObjects.ForgotPasswordScreen;
 import framework.pageObjects.LoginScreen;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 
 /**
@@ -33,13 +26,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-    private String registered_email_address= "testmail@gmail.com";
-    private String registered_password = "Abc123@";
+    private String registered_email_address= "testmail@example.com";
+    private String registered_password = "test123@";
+
+    private LoginScreen loginActivity = new LoginScreen();
+    private ForgotPasswordScreen showDialog = new ForgotPasswordScreen();
 
     @Rule
     public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
 
-    public LoginPageTests() {
+    public LoginPageTest() {
 
         super(LoginActivity.class);
 
@@ -47,7 +43,6 @@ public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivi
 
     @Test
     public void verifyLogo(){
-
         LoginScreen ls = new LoginScreen();
         ls.verifySodexoLogo();
     }
@@ -62,28 +57,17 @@ public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivi
         assertTrue(ls.verifyAuthentication());
     }
 
-//    @Test
-//    public void verifyString() throws Exception{
-//
-//        onView(withId(R.id.loginUserNameEditText)).perform(typeText("vvekkurhe555.com"), closeSoftKeyboard());
-//        onView(withId(R.id.loginPasswordEditText)).perform(typeText("Vivek123"), closeSoftKeyboard());
-//        onView(withId(R.id.loginButton)).perform(click());
-//        String error_msg = InstrumentationRegistry.getTargetContext().getString(R.string.email_validation_message);
-//        assertEquals("Please enter valid email", error_msg);
-//
-//    }
-
 
     @Test
-    public void has_forgot_password_link() throws Exception{
-        onView(withId(R.id.loginForgotPasswordTextView)).check(matches(isDisplayed()));
+    public void isForgotPasswordLinkPresent() throws Exception{
+        loginActivity.verifyForgotPasswordLink();
     }
 
-    @Test
-    public void click_forgot_password(){
-        onView(withId(R.id.loginForgotPasswordTextView)).perform(click());
-        onView(withText(R.string.forgot_password_title)).check(matches(isDisplayed()));
 
+    @Test
+    public void verifyForgotPasswordLink(){
+        loginActivity.clickForgotPasswordLink();
+        showDialog.doesResetPasswordDialogAppear();
     }
 
 }
