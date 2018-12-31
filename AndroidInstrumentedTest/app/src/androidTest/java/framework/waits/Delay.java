@@ -23,7 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class Delay {
 
-    //  Call this method in the test script like this
+//  Call this method in the test script like this
 //  onView(isRoot()).perform(Delay.waitFor(300));
     public static ViewAction waitFor(final long millis) {
         return new ViewAction() {
@@ -46,7 +46,7 @@ public class Delay {
     }
 
 
-    //    Call this below method in a testscript making some changes in it.
+//    Call this below method in a testscript making some changes in it.
 //    onView(isRoot()).perform(waitId(R.id.dialogEditor, TimeUnit.SECONDS.toMillis(15)));
     public static ViewAction waitId(final int viewId, final long millis) {
         return new ViewAction() {

@@ -26,19 +26,17 @@ public class LoginScreen extends TestBase {
     private ViewInteraction loginEmailField = onView(withId(R.id.loginUserNameEditText));
     private ViewInteraction loginPasswordField = onView(withId(R.id.loginPasswordEditText));
     private ViewInteraction loginButton = onView(withId(R.id.loginButton));
-    private ViewInteraction sodexoLogo = onView(withId(R.id.loginAppImageView));
+    public ViewInteraction sodexoLogo = onView(withId(R.id.loginAppImageView));
     private ViewInteraction authenticateUser = onView(withText("My Sodexo Mobile Wallet"));
     private ViewInteraction forgotPasswordLink = onView(withId(R.id.loginForgotPasswordTextView));
 
 
     public void enterEmail(String email){
-        loginEmailField.perform(clearText());
-        loginEmailField.perform(typeText(email), closeSoftKeyboard());
+        loginEmailField.perform(clearText()).perform(typeText(email)).perform(closeSoftKeyboard());
     }
 
     public void enterPassword(String pwd){
-        loginPasswordField.perform(clearText());
-        loginPasswordField.perform(typeText(pwd), closeSoftKeyboard());
+        loginPasswordField.perform(clearText()).perform(typeText(pwd)).perform(closeSoftKeyboard());
     }
 
     public void clickLoginButton(){
@@ -46,8 +44,12 @@ public class LoginScreen extends TestBase {
     }
 
     public boolean verifyAuthentication(){
+
+        MainActivityScreen main = new MainActivityScreen();
         try{
-            authenticateUser.check(matches(isDisplayed()));
+//            authenticateUser.check(matches(isDisplayed()));
+            main.openNavigationDrawer();
+            main.authenticate_user.check(matches(isDisplayed()));
             return true;
         }catch (Exception e){
             return false;
@@ -71,5 +73,11 @@ public class LoginScreen extends TestBase {
 
     public void clickForgotPasswordLink(){
         forgotPasswordLink.perform(click());
+    }
+
+    public void goBack(){
+
+//        pressBack();
+
     }
 }

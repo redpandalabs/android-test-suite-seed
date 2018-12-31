@@ -29,13 +29,13 @@ public class ForgotPasswordScreen {
     private ViewInteraction emailSentTitle = onView(withId(R.id.titleTextView));
     private ViewInteraction resetPasswordDialog = onView(withText(R.string.forgot_password_title));
 
+
     protected void clickSubmitButton(){
         button.perform(click());
     }
 
     protected void enterEmail(String email){
-        emailTextBox.perform(clearText());
-        emailTextBox.perform(typeText(email), closeSoftKeyboard());
+        emailTextBox.perform(clearText()).perform(typeText(email)).perform(closeSoftKeyboard());
     }
 
 
@@ -48,7 +48,7 @@ public class ForgotPasswordScreen {
     }
 
 
-    protected void waitForResponse(){
+    private void waitForResponse(){
         Delay.waitForElementUntilDisplayed(title);
     }
 

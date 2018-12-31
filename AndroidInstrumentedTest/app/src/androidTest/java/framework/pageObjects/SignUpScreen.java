@@ -44,29 +44,28 @@ public class SignUpScreen {
     private ViewInteraction registerButton = onView(withId(R.id.registerButton));
     private ViewInteraction termsAndConditions = onView(allOf(withId(R.id.sodexoTermsAndConditions), isClickable()));
     private ViewInteraction okButton = onView(withText("OK"));
-
+    private ViewInteraction datePicker = onView(withClassName(Matchers.equalTo(DatePicker.class.getName())));
+    private ViewInteraction signUpScreenTitle = onView(withText("Please fill in the form"));
     private ViewInteraction registrationFailureMessage = onView(withId(R.id.subTitleTextView));
 
     protected void enterName(String username){
 
-        name.perform(clearText());
-        name.perform(typeText(username), closeSoftKeyboard());
+        name.perform(clearText()).perform(typeText(username)).perform(closeSoftKeyboard());
 
     }
 
     protected void enterEmail(String email){
-        registerEmail.perform(clearText());
-        registerEmail.perform(typeText(email), closeSoftKeyboard());
+
+        registerEmail.perform(clearText()).perform(typeText(email)).perform(closeSoftKeyboard());
     }
 
     protected void enterPassword(String pwd){
-        registerPassword.perform(clearText());
-        registerPassword.perform(typeText(pwd), closeSoftKeyboard());
+
+        registerPassword.perform(clearText()).perform(typeText(pwd)).perform(closeSoftKeyboard());
     }
 
-    protected void enterConfirmPassword(String pwd){
-        registerConfirmPassword.perform(clearText());
-        registerConfirmPassword.perform(typeText(pwd), closeSoftKeyboard());
+    protected void enterConfirmPassword(String confirmPassword){
+        registerConfirmPassword.perform(clearText()).perform(typeText(confirmPassword)).perform(closeSoftKeyboard());
     }
 
     protected void clickRegisterButton(){
@@ -92,18 +91,18 @@ public class SignUpScreen {
     protected void selectBirthdate(int year, int monthOfYear, int dayOfMonth){
 
         birthDate.perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, monthOfYear, dayOfMonth));
+        datePicker.perform(PickerActions.setDate(year, monthOfYear, dayOfMonth));
         okButton.perform(click());
     }
 
     protected void verifySignUpScreen(){
 
         signUpLink.perform(click());
-        onView(withText("Please fill in the form")).check(matches(isDisplayed()));
+        signUpScreenTitle.check(matches(isDisplayed()));
 
     }
 
-    public String getCity(){
+    protected String getCity(){
 
         /**
          *
@@ -118,16 +117,11 @@ public class SignUpScreen {
          *
          */
 
-
         Random rand = new Random();
-
         Resources resource = InstrumentationRegistry.getContext().getResources();
         String[] citiesList = resource.getStringArray(R.array.cities);
-
         int size = citiesList.length;
-
         int x = rand.nextInt(size);
-
         return citiesList[x];
 
     }

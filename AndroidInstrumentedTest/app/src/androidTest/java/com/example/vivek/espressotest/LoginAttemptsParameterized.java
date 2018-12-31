@@ -1,4 +1,4 @@
-package com.example.vivek.androidinstrumentedtest;
+package com.example.vivek.espressotest;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -23,14 +23,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by vivek on 13/12/18.
+ * Created by vivek on 27/12/18.
  */
 
 @RunWith(Parameterized.class)
-public class TestData extends LoginScreen {
+public class LoginAttemptsParameterized extends LoginScreen {
 
     @Rule
-    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<>(LoginActivity.class);
 
 
     private String email;
@@ -41,17 +41,17 @@ public class TestData extends LoginScreen {
     public static Collection<Object[]> data(){
 
         return Arrays.asList(new Object[][] {
-                {"test555.com", "vjvsdjf", "Please enter valid email"},
-                {"testmail@gmail.com", "werwerfw", "Email or Password doesn't match. Please try again."},
-                {"testmail123.com", "Abc123@", "Please enter valid email"},
-                {"testmail@gmail.com", "", "Please enter password"},
-                {"test1244@.com", "", "Please enter valid email"},
-                {"", "Abc123@", "Please enter valid email"},
+                {"vvekkurhe555.com", "vjvsdjf", "Please enter valid email"},
+                {"Vvekkurhe555@gmail.com", "werwerfw", "Email or Password doesn't match. Please try again."},
+                {"vvekkurhe555.com", "Vivek123@", "Please enter valid email"},
+                {"Vvekkurhe555@gmail.com", "", "Please enter password"},
+                {"vvekkurhe555.com", "", "Please enter valid email"},
+                {"", "Vivek123@", "Please enter valid email"},
                 {"", "vjvsdjf", "Please enter valid email"}
         });
     }
 
-    public TestData(String email, String pwd, String expectedResult){
+    public LoginAttemptsParameterized(String email, String pwd, String expectedResult){
         this.email = email;
         this.pwd = pwd;
         this.expectedResult = expectedResult;
@@ -67,7 +67,6 @@ public class TestData extends LoginScreen {
         boolean result = verifyErrorMessage(expectedResult);
         assertTrue(result);
     }
-
 
     public boolean verifyErrorMessage(String expectedResult) throws Exception{
 
@@ -88,7 +87,5 @@ public class TestData extends LoginScreen {
         else {
             return false;
         }
-
     }
-
 }

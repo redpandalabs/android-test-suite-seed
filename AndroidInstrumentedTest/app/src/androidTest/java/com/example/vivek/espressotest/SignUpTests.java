@@ -1,4 +1,4 @@
-package com.example.vivek.androidinstrumentedtest;
+package com.example.vivek.espressotest;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -26,13 +26,13 @@ import static junit.framework.Assert.assertTrue;
 @LargeTest
 public class SignUpTests extends SignUpScreen {
 
-    private String registeredEmailAddress = "testmail@example.com";
+    private String registeredEmailAddress = "vvekkurhe555@gmail.com";
     String city = "Bantul";
 
     private DataGenerator testData = new DataGenerator();
 
     @Rule
-    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<LoginActivity>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<>(LoginActivity.class);
 
     @Before
     public void setUp(){
@@ -59,7 +59,7 @@ public class SignUpTests extends SignUpScreen {
         enterName(testData.getName());
         selectBirthdate(testData.getYear(), testData.getMonthOfYear(), testData.getDayOfMonth());
         selectGender(testData.getGender());
-        selectCity(getCity());
+        selectCity(city);
         enterEmail(registeredEmailAddress);
         enterPassword(testData.getPassword());
         enterConfirmPassword(testData.getPassword());
@@ -69,7 +69,7 @@ public class SignUpTests extends SignUpScreen {
 
 
 
-    @Test
+//    @Test
     public void verifyTermsAndConditions(){
         openTermsAndConditionsPage();
     }

@@ -1,4 +1,4 @@
-package com.example.vivek.androidinstrumentedtest;
+package com.example.vivek.espressotest;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -29,11 +29,11 @@ public class ForgotPasswordTests extends ForgotPasswordScreen {
     private String expectedToastErrorMessage = "User not found";
     private String expectedEmailSentMessage = "Email Sent";
 
-    private String wrongEmail = "testemail@.com";
-    private String correctEmail = "testmail@example.com";
+    private String wrongEmail = "vvekkurhe555.com";
+    private String correctEmail = "Vvekkurhe555@gmail.com";
 
     @Rule
-    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<LoginActivity>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> forgotPassword = new ActivityTestRule<>(LoginActivity.class);
 
 
     public void clickForgotPasswordLink(){
@@ -68,7 +68,7 @@ public class ForgotPasswordTests extends ForgotPasswordScreen {
 
     }
 
-    @Test
+//    @Test
     public void reset_password_with_valid_mail(){
 
         clickForgotPasswordLink();

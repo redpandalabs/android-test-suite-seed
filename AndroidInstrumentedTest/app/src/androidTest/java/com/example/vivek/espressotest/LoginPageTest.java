@@ -1,4 +1,4 @@
-package com.example.vivek.androidinstrumentedtest;
+package com.example.vivek.espressotest;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -24,16 +24,19 @@ import framework.pageObjects.LoginScreen;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class LoginPageTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-    private String registered_email_address= "testmail@example.com";
-    private String registered_password = "test123@";
+    private String registered_email_address= "Vvekkurhe555@gmail.com";
+    private String registered_password = "Vivek123@";
 
     private LoginScreen loginActivity = new LoginScreen();
     private ForgotPasswordScreen showDialog = new ForgotPasswordScreen();
 
+    private LoginScreen ls = new LoginScreen();
+
     @Rule
-    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<>(LoginActivity.class);
+
 
     public LoginPageTest() {
 
@@ -43,14 +46,13 @@ public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivi
 
     @Test
     public void verifyLogo(){
-        LoginScreen ls = new LoginScreen();
+
         ls.verifySodexoLogo();
     }
 
 
     @Test
     public void verifyUserAuthentication(){
-        LoginScreen ls = new LoginScreen();
         ls.enterEmail(registered_email_address);
         ls.enterPassword(registered_password);
         ls.clickLoginButton();
@@ -68,6 +70,13 @@ public class LoginPageTests extends ActivityInstrumentationTestCase2<LoginActivi
     public void verifyForgotPasswordLink(){
         loginActivity.clickForgotPasswordLink();
         showDialog.doesResetPasswordDialogAppear();
+    }
+
+    @Test
+    public void verifyPressBackAfterLogin(){
+        verifyUserAuthentication();
+        ls.goBack();
+
     }
 
 }
